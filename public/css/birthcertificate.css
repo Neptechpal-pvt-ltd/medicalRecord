@@ -1,0 +1,125 @@
+#birth_certificate {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  border-style: double;
+}
+
+.first_logo {
+  align-items: center;
+}
+
+#header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* padding: 2rem 2rem 0rem 2rem; */
+}
+
+.first_logo,
+.sec_logo,
+img {
+  height: 5rem;
+  width: 6rem;
+}
+
+.heading {
+  text-align: center;
+}
+.nep_heading {
+  font-size: 12px;
+  font-weight: bold;
+}
+.eng_heading {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+#main {
+  padding: 0 2rem;
+  text-align: center;
+}
+
+.academy {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 14px;
+}
+.hospital {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.certificate {
+  font-size: 30px;
+  font-weight: bolder;
+}
+.bs {
+  display: flex;
+  flex-direction: column;
+  margin-top: 7rem;
+}
+
+.baby-details {
+  padding: 0 2rem;
+}
+.details {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 2rem;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+.left {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+#footer {
+  padding: 3rem 2rem 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+hr {
+  border: 1px solid black;
+  border-style: dashed;
+}
+.footer,
+.director {
+  margin-top: 5px;
+}
+
+@media (max-width: 767px) {
+  .details {
+    flex-direction: column;
+    font-size: 14px;
+  }
+  .academy {
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .hospital {
+    font-size: 10px;
+    font-weight: 800;
+    margin-bottom: 5px;
+  }
+  .certificate {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  .first_logo,
+  .sec_logo,
+  img {
+    height: 3rem;
+    width: 4rem;
+  }
+  #header {
+    padding: 1rem 1rem 0rem 1rem;
+  }
+}
