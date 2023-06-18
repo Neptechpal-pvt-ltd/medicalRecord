@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DocumentsController;
 use App\Http\Controllers\QuestionController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,12 +22,9 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-// Route::middleware()
-Route::group(['middleware' => ['auth']],function(){
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('category',CategoryController::class);
-Route::get('category/{category_id}/add-question',[QuestionController::class,'create']);
-Route::get('category/{category_id}/edit-question/{question_id}',[QuestionController::class,'edit']);
-Route::get('category/{category_id}/view-question/{question_id}',[QuestionController::class,'show']);
-Route::resource('question',QuestionController::class);
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::resource('documents',DocumentsController::class);
+    Route::post('fetch-districts', [DocumentsController::class, 'fetchDistrict']);
+    Route::post('fetch-municipalities', [DocumentsController::class, 'fetchMunicipality']);
 });
