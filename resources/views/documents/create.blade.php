@@ -251,10 +251,10 @@
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="date" id="registered_date_ad" name="registered_date_ad" readonly
-                                            class="form-control @error('registered_date_ad') is-invalid @enderror"
-                                            value="{{ old('registered_date_ad') }}">
-                                        @error('registered_date_ad')
+                                        <input type="date" id="registered_date_ad" name="registered_date" readonly
+                                            class="form-control @error('registered_date') is-invalid @enderror"
+                                            value="{{ old('registered_date') }}">
+                                        @error('registered_date')
                                         <span class="invalid-feedback" role="alert">
                                             {{$errors->first('registered_date_ad')}}</strong>
                                         </span>

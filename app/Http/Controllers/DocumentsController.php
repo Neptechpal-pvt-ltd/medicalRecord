@@ -59,13 +59,13 @@ class DocumentsController extends Controller
             'birth_time' => ['required'],
             'province_id' => ['required'],
             'district_id' => ['required'],
-            'municipality_id' => ['required'],
+            'municipal_id' => ['required'],
             'ward_no' => ['required'],
             'address' => ['required'],
-            'certificate_no' => ['required'],
-            'ip_no' => ['required'],
+            'certificate_no' => ['required','unique:documents,ip_no'],
+            'ip_no' => ['required','unique:documents,ip_no'],
             'registered_date_bs' => ['required'],
-            'registered_date_ad' => ['required'],
+            'registered_date' => ['required'],
             'approved_by' => ['required'],
             'verified_by' => ['required']
         ]);
@@ -94,9 +94,14 @@ class DocumentsController extends Controller
      * @param  \App\Models\Documents  $documents
      * @return \Illuminate\Http\Response
      */
-    public function edit(Documents $documents)
+    public function edit($id)
     {
-        //
+        $data['countries'] = Countries::orderByRaw("CASE WHEN name LIKE 'Nepal' THEN 0 ELSE 1 END, id")->get(['id','name','nationality']);
+        $data['provinces'] = Provinces::get(['id','province_name']);
+        $data['districts'] = Districts::get(['id','district_name']);
+        $data['municipals'] = Municipals::get(['id','municipal_name']);
+        $data['document'] = Documents::with('province','district','municipality','motherNationality','fatherNationality')->findOrFail($id);
+        return view('documents.edit',$data);
     }
 
     /**
@@ -106,9 +111,37 @@ class DocumentsController extends Controller
      * @param  \App\Models\Documents  $documents
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Documents $documents)
+    public function update(Request $request, $id)
     {
-        //
+        $document = Documents::findOrFail($id);
+        $request->validate([
+            'father_name' => ['required'],
+            'father_name_dev' => ['required'],
+            'mother_name' => ['required'],
+            'mother_name_dev' => ['required'],
+            'father_nationality' => ['required'],
+            'mother_nationality' => ['required'],
+            'gender' => ['required'],
+            'weight' => ['required'],
+            'birth_date_bs' => ['required'],
+            'birth_date' => ['required'],
+            'birth_time' => ['required'],
+            'province_id' => ['required'],
+            'district_id' => ['required'],
+            'municipal_id' => ['required'],
+            'ward_no' => ['required'],
+            'address' => ['required'],
+            'certificate_no' => ['required','unique:documents,certificate_no,'.$id],
+            'ip_no' => ['required','unique:documents,ip_no,'.$id],
+            'registered_date_bs' => ['required'],
+            'registered_date' => ['required'],
+            'approved_by' => ['required'],
+            'verified_by' => ['required']
+        ]);
+
+        $data = $request->except('_method','_token');
+        $document->update($data);
+        return redirect()->route('documents.index')->with('success','Details Updated Successfuly!');
     }
 
     /**

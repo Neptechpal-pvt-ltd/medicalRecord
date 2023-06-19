@@ -136,19 +136,27 @@ use App\Helpers\Helper;
         </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script> --}}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js">
+</script>
+
 <script>
     $(document).ready(function() {
+        var certificateNo = @json($document->certificate_no);
         $('#print').click(function(e) {
-            var divToPrint = document.getElementById('birth_certificate');
-                    var newWin = window.open('', 'Print-Window');
-                    newWin.document.open();
-                    newWin.document.write(`<html><head><link rel="stylesheet" type="text/css" href="{{asset('css/birthcertificate.css')}}"></head><body onload="window.print()">` + divToPrint.innerHTML +
-                        `</body></html>`);
-                    newWin.document.close();
-                    setTimeout(function() {
-                        newWin.close();
-                    }, 1000);
+            html2canvas($('#birth_certificate')[0], {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        content: [{
+                            image: data,
+                            width: 500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).download(`${certificateNo} `  + ".pdf");
+                }
+            });
         })
     })
 </script>
